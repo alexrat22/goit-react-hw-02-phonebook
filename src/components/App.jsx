@@ -44,6 +44,17 @@ class App extends Component {
 
         <label>Find contact by name</label>
         <input type="text" name="filter" required />
+
+        <ul>
+          {this.state.contacts.map(contact => {
+            return (
+              <li key={contact.id}>
+                <p>{contact.name}</p>
+                <p>{contact.number}</p>
+              </li>
+            );
+          })}
+        </ul>
       </>
     );
   }
