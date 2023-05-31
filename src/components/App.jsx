@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import shortid from 'shortid';
 
 class App extends Component {
   state = {
@@ -13,17 +14,26 @@ class App extends Component {
     number: '',
   };
 
+  addContact = ({ name, number }) => {
+    console.log('Submit');
+    const newContact = { id: shortid(), name, number };
+    console.log(newContact);
+    this.setState(prevState => ({
+      contacts: [newContact, ...prevState.contacts],
+    }));
+  };
+
   render() {
     return (
       <>
         <h1>Phonebook</h1>
 
-        <form>
+        <form onSubmit={this.addContact}>
           <label>Name</label>
           <input
             type="text"
             name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
           />
@@ -32,13 +42,13 @@ class App extends Component {
           <input
             type="tel"
             name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
           />
-        </form>
 
-        <button type="submit">Add contact</button>
+          <button type="submit">Add contact</button>
+        </form>
 
         <h2>Contacts</h2>
 
