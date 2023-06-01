@@ -31,7 +31,7 @@ class App extends Component {
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
-        <Filter />
+        <Filter value={this.state.filter} />
         <ContactsList contacts={this.state.contacts} />
       </>
     );
