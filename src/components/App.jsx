@@ -18,11 +18,24 @@ class App extends Component {
   addContact = ({ name, number }) => {
     const newContact = { id: shortid.generate(), name, number };
     const savedName = this.state.contacts.map(contact => contact.name);
+
     if (!savedName.includes(name)) {
       this.setState(prevState => ({
         contacts: [newContact, ...prevState.contacts],
       }));
     } else alert(`${name} is already in contacts`);
+  };
+
+  handleChange = evt => {
+    this.setState({ filter: evt.currentTarget.value });
+  };
+
+  getFilteredNames = () => {
+    const { contacts, filter } = this.state;
+    const normalizedInputName = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedInputName)
+    );
   };
 
   render() {
@@ -31,8 +44,8 @@ class App extends Component {
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
-        <Filter value={this.state.filter} />
-        <ContactsList contacts={this.state.contacts} />
+        <Filter value={this.state.filter} onChange={this.handleChange} />
+        <ContactsList contacts={this.getFilteredNames()} />
       </>
     );
   }
