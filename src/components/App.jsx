@@ -1,4 +1,7 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
+import ContactForm from './ContactForm/ContactForm';
+import ContactsList from './ContactsList/contactslist';
+import Filter from './Filter/Filter';
 import shortid from 'shortid';
 
 class App extends Component {
@@ -10,61 +13,26 @@ class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
   addContact = ({ name, number }) => {
-    console.log('Submit');
-    const newContact = { id: shortid(), name, number };
-    console.log(newContact);
-    this.setState(prevState => ({
-      contacts: [newContact, ...prevState.contacts],
-    }));
+    const newContact = { id: shortid.generate(), name, number };
+    const savedName = this.state.contacts.map(contact => contact.name);
+    if (!savedName.includes(name)) {
+      this.setState(prevState => ({
+        contacts: [newContact, ...prevState.contacts],
+      }));
+    } else alert(`${name} is already in contacts`);
   };
 
   render() {
     return (
       <>
         <h1>Phonebook</h1>
-
-        <form onSubmit={this.addContact}>
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
-
-          <label>Number</label>
-          <input
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-          />
-
-          <button type="submit">Add contact</button>
-        </form>
-
+        <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
-
-        <label>Find contact by name</label>
-        <input type="text" name="filter" required />
-
-        <ul>
-          {this.state.contacts.map(contact => {
-            return (
-              <li key={contact.id}>
-                <p>{contact.name}</p>
-                <p>{contact.number}</p>
-              </li>
-            );
-          })}
-        </ul>
+        <Filter />
+        <ContactsList contacts={this.state.contacts} />
       </>
     );
   }
