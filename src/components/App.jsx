@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import {
+  FormContainer,
+  ContactsContainer,
+  Title,
+  TitleContacts,
+} from './App.styled';
 import ContactForm from './ContactForm/ContactForm';
 import ContactsList from './ContactsList/contactslist';
 import Filter from './Filter/Filter';
@@ -38,14 +44,27 @@ class App extends Component {
     );
   };
 
+  removeContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
+
   render() {
     return (
       <>
-        <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.addContact} />
-        <h2>Contacts</h2>
-        <Filter value={this.state.filter} onChange={this.handleChange} />
-        <ContactsList contacts={this.getFilteredNames()} />
+        <FormContainer>
+          <Title>Phonebook</Title>
+          <ContactForm onSubmit={this.addContact} />
+        </FormContainer>
+        <ContactsContainer>
+          <TitleContacts>Contacts</TitleContacts>
+          <Filter value={this.state.filter} onChange={this.handleChange} />
+          <ContactsList
+            contacts={this.getFilteredNames()}
+            onRemoveBtnClick={this.removeContact}
+          />
+        </ContactsContainer>
       </>
     );
   }

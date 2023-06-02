@@ -1,14 +1,27 @@
-export default function ContactsList({ contacts }) {
+import {
+  ContactList,
+  ContactItem,
+  ContactName,
+  RemoveButton,
+} from './ContactList.styled';
+
+export default function ContactsList({ contacts, onRemoveBtnClick }) {
   return (
-    <ul>
+    <ContactList>
       {contacts.map(contact => {
         return (
-          <li key={contact.id}>
+          <ContactItem key={contact.id}>
             <p>{contact.name}</p>
             <p>{contact.number}</p>
-          </li>
+            <RemoveButton
+              type="button"
+              onClick={() => onRemoveBtnClick(contact.id)}
+            >
+              Delete
+            </RemoveButton>
+          </ContactItem>
         );
       })}
-    </ul>
+    </ContactList>
   );
 }

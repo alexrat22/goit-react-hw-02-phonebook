@@ -1,9 +1,11 @@
+import { Input } from '../ContactForm/ContactForm.styled';
+
 export default function Filter({ value, onChange }) {
   return (
     <div>
       <label>
-        Find contact by name
-        <input
+        <p>Find contact by name</p>
+        <Input
           type="text"
           name="filter"
           value={value}
