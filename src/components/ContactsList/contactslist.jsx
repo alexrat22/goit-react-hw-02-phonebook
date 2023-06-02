@@ -1,9 +1,5 @@
-import {
-  ContactList,
-  ContactItem,
-  ContactName,
-  RemoveButton,
-} from './ContactList.styled';
+import PropTypes from 'prop-types';
+import { ContactList, ContactItem, RemoveButton } from './ContactList.styled';
 
 export default function ContactsList({ contacts, onRemoveBtnClick }) {
   return (
@@ -25,3 +21,10 @@ export default function ContactsList({ contacts, onRemoveBtnClick }) {
     </ContactList>
   );
 }
+
+ContactsList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({ id: PropTypes.string.isRequired })
+  ).isRequired,
+  onRemoveBtnClick: PropTypes.func.isRequired,
+};

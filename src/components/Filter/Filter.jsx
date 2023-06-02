@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Input } from '../ContactForm/ContactForm.styled';
 
 export default function Filter({ value, onChange }) {
@@ -16,3 +17,8 @@ export default function Filter({ value, onChange }) {
     </div>
   );
 }
+
+Filter.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
