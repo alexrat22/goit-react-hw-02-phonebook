@@ -23,13 +23,16 @@ class App extends Component {
 
   addContact = ({ name, number }) => {
     const newContact = { id: shortid.generate(), name, number };
-    const savedName = this.state.contacts.map(contact => contact.name);
 
-    if (!savedName.includes(name)) {
+    if (
+      this.state.contacts.find(contact => contact.name.toLowerCase() === name)
+    ) {
+      alert(`${name} is already in contacts`);
+    } else {
       this.setState(prevState => ({
         contacts: [newContact, ...prevState.contacts],
       }));
-    } else alert(`${name} is already in contacts`);
+    }
   };
 
   handleChange = evt => {
